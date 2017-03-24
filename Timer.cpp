@@ -10,7 +10,7 @@
 static DebugHelper Debug("Timer");
 
 
-EVENT_ID Timer::TIMER_FIRED_EVENT = EventSource::GenerateEventID();
+//EVENT_ID Timer::TIMER_FIRED_EVENT = EventSource::GenerateEventID();
 
 
 void Timer::Start(uint32_t interval, uint8_t sourceID)

@@ -10,7 +10,7 @@ A timer with millisecond resolution.
 *******************************************************************************/
 class Timer : public EventSource
 {
-    public: static EVENT_ID TIMER_FIRED_EVENT;
+    public: static const EVENT_ID TIMER_FIRED_EVENT = (EventSourceID::Timer | EventCode::DefaultEvent);
 
     //**************************************************************************
     // Constructors
