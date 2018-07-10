@@ -7,11 +7,7 @@
 #include "Timer.h"
 
 
-static DebugHelper Debug("Timer");
-
-
-//EVENT_ID Timer::TIMER_FIRED_EVENT = EventSource::GenerateEventID();
-
+DEFINE_CLASSNAME(Timer);
 
 void Timer::Start(uint32_t interval, uint8_t sourceID)
 {
@@ -20,8 +16,8 @@ void Timer::Start(uint32_t interval, uint8_t sourceID)
     _expired = false;
     _sourceID = sourceID;
     _startTime = millis();
-    
-    Debug.Log("Start => interval=%l", _interval);
+
+    TRACE(Logger(_classname_, this) << F("Start: interval=") << _interval << endl);
 }
 
 
@@ -34,19 +30,21 @@ void Timer::Cancel()
 
 void Timer::Poll()
 {
+    TRACE(Logger(_classname_, this) << F("Poll") << endl);
+
     if (_expired) return;
 
-    uint32_t now = millis();
-    uint32_t elapsed = now - _startTime;
+    auto now = millis();
+    auto elapsed = now - _startTime;
 
     if (elapsed >= _interval)
     {
         _expired = true;
-        Debug.Log("Poll => Fired elapsed=%l", elapsed);
-        
+        TRACE(Logger(_classname_, this) << F("Fired: elapsed=") << elapsed << endl);
+
         TimerEvent event(elapsed, _sourceID);
-        
-        DispatchEvent(&event);
+
+        DispatchEvent(event);
         _sourceID = 0;
     }
 }

@@ -2,6 +2,7 @@
 #define _Timer_H_
 
 #include <inttypes.h>
+#include <RTL_StdLib.h>
 #include <EventSource.h>
 
 
@@ -10,21 +11,21 @@ A timer with millisecond resolution.
 *******************************************************************************/
 class Timer : public EventSource
 {
+    DECLARE_CLASSNAME;
+
     public: static const EVENT_ID TIMER_FIRED_EVENT = (EventSourceID::Timer | EventCode::DefaultEvent);
 
     //**************************************************************************
     // Constructors
     //**************************************************************************
-    public: Timer() : _expired(true) {};
+    public: Timer() : _expired(true) { _id="Timer"; };
 
     //**************************************************************************
     // Public methods
     //**************************************************************************
     public: void Start(uint32_t interval, uint8_t sourceID=0);
-
     public: void Cancel();
-
-    public: virtual void Poll();
+    public: void Poll();
 
     //**************************************************************************
     // Properties
