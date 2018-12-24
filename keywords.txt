@@ -1,3 +1,4 @@
+RTL_Timer	KEYWORD1
 Timer	KEYWORD1
 TimerEvent	KEYWORD1
 
