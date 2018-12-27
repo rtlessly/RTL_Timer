@@ -6,40 +6,60 @@
 #include <EventSource.h>
 
 
-/*******************************************************************************
-A timer with millisecond resolution.
-*******************************************************************************/
+//******************************************************************************
+/// A timer with millisecond resolution. Timers are always one-shot, i.e., they 
+/// do not automatically restart once they expire. 
+//******************************************************************************
 class Timer : public EventSource
 {
     DECLARE_CLASSNAME;
 
+	/// The timer event ID that is posted when the timer expires.
     public: static const EVENT_ID TIMER_FIRED_EVENT = (EventSourceID::Timer | EventCode::DefaultEvent);
 
     //**************************************************************************
-    // Constructors
+    /// Constructs an instance of the Timer class.
     //**************************************************************************
     public: Timer() : _expired(true) { _id="Timer"; };
 
     //**************************************************************************
-    // Public methods
+    /// Implementation of the EventSource::Poll method. This method is called
+	/// by the event dispatch loop.
     //**************************************************************************
-    public: void Start(uint32_t interval, uint8_t sourceID=0);
-    public: void Cancel();
     public: void Poll();
 
     //**************************************************************************
-    // Properties
+    /// Starts the timer with the specified timeout, in milliseconds.
+	/// <param name="interval"> The timeout interval in milliseconds</param>
+	/// <param name="sourceID"> The optional timer ID value. The default is 0.</param>
+    //**************************************************************************
+    public: void Start(uint32_t interval, uint8_t sourceID=0);
+
+    //**************************************************************************
+    /// Cancels the timer. The timer stops and will not trigger.
+    //**************************************************************************
+    public: void Cancel();
+
+    //**************************************************************************
+    /// Gets the timeout interval value, in milliseconds.
     //**************************************************************************
     public: uint32_t Interval() { return _interval; };
 
+    //**************************************************************************
+    /// Get a value indicating if the timer has expired.
+    //**************************************************************************
     public: bool IsExpired() { return _expired; };
 
-    //**************************************************************************
-    // Internal state
-    //**************************************************************************
+    /// The timer expired flag.
     private: bool     _expired;
+
+    /// The timer ID.
     private: uint8_t  _sourceID;
+
+    /// The timeout interval value, in milliseconds.
     private: uint32_t _interval;
+
+    /// The time, in milliseconds, when the timer started.
     private: uint32_t _startTime;
 };
 

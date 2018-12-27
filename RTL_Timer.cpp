@@ -1,10 +1,9 @@
-#define DEBUG 0
-
 #include <Arduino.h>
 #include <Debug.h>
 #include <EventSource.h>
+#include "RTL_Timer.h"
 
-#include "Timer.h"
+#define DEBUG 0
 
 
 DEFINE_CLASSNAME(Timer);
