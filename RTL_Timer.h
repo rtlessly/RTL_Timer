@@ -14,24 +14,24 @@ class Timer : public EventSource
 {
     DECLARE_CLASSNAME;
 
-	/// The timer event ID that is posted when the timer expires.
+    /// The timer event ID that is posted when the timer expires.
     public: static const EVENT_ID TIMER_FIRED_EVENT = (EventSourceID::Timer | EventCode::DefaultEvent);
 
     //**************************************************************************
     /// Constructs an instance of the Timer class.
     //**************************************************************************
-    public: Timer() : _expired(true) { _id="Timer"; };
+    public: Timer() { };
 
     //**************************************************************************
     /// Implementation of the EventSource::Poll method. This method is called
-	/// by the event dispatch loop.
+    /// by the event dispatch loop.
     //**************************************************************************
     public: void Poll();
 
     //**************************************************************************
     /// Starts the timer with the specified timeout, in milliseconds.
-	/// <param name="interval"> The timeout interval in milliseconds</param>
-	/// <param name="sourceID"> The optional timer ID value. The default is 0.</param>
+    /// <param name="interval"> The timeout interval in milliseconds</param>
+    /// <param name="sourceID"> The optional timer ID value. The default is 0.</param>
     //**************************************************************************
     public: void Start(uint32_t interval, uint8_t sourceID=0);
 
@@ -51,7 +51,7 @@ class Timer : public EventSource
     public: bool IsExpired() { return _expired; };
 
     /// The timer expired flag.
-    private: bool     _expired;
+    private: bool _expired = true;
 
     /// The timer ID.
     private: uint8_t  _sourceID;
